@@ -26,7 +26,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      <div className="mx-12 my-12">
+      <div className="mx-12 my-12 flex flex-col gap-10">
         {/* Monthly report section (with graphs) */}
         {transactions.length > 0 && (
           <MonthlyReportSection />
@@ -41,7 +41,7 @@ export default function Home() {
         )}
 
         {/* Functional buttons */}
-        <div className="my-6 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <h2 className="text-4xl font-extrabold">
             {transactions.length > 0 ? "Actions" : "Add a transaction to get started"}
           </h2>
@@ -57,8 +57,8 @@ export default function Home() {
 
         {/* Suggestions section */}
         {transactions.length > 0 && (
-          <div className="my-6 text-center flex flex-col">
-            <h2 className="text-4xl font-extrabold my-4 mr-auto">
+          <div className="text-center flex flex-col gap-4">
+            <h2 className="text-4xl font-extrabold mr-auto">
               Suggestions for YOU
             </h2>
             <div className="flex flex-col w-full">

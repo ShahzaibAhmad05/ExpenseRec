@@ -2,11 +2,11 @@
 
 export default function MonthlyReportSection() {
   return (
-    <div>
-      <h2 className="text-5xl font-extrabold my-6">
+    <div className="flex flex-col gap-4">
+      <h2 className="text-5xl font-extrabold">
         This Month's Report
       </h2>
-      <div className="text-lg my-6 mx-1">
+      <div className="text-lg mx-1">
         there will be reports here
       </div>
     </div>

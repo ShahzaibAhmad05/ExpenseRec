@@ -27,17 +27,17 @@ export default function TransactionsSection(
 
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       <h2 className="text-4xl font-extrabold">
         Transactions
       </h2>
-      <div className="flex flex-col gap-2 mx-1">
+      <div className="flex flex-col gap-6 mx-1">
         {transactions.map((transaction) => (
           <div 
             className="flex flex-row border border-black rounded-2xl px-6 py-2 shadow-[6px_6px_0_black]" 
             key={transaction.id}
           >
-            <div className="flex flex-col my-2">
+            <div className="flex flex-col my-2 w-[30%]">
               <h3 className="text-xl font-bold uppercase">{transaction.title}</h3>
               <div className="my-2">
                 <span 
@@ -55,7 +55,7 @@ export default function TransactionsSection(
                 </span>
               </div>
             </div>
-            <div className="my-2 mx-18">
+            <div className="my-2 mx-12">
               <span className="text-gray-700">
                 {transaction.description}
               </span>
@@ -63,13 +63,13 @@ export default function TransactionsSection(
             <div className="flex flex-col gap-2 my-2 ml-auto">
               <button
                 onClick={() => handleRemoveTransaction(transaction)}
-                className="border rounded-2xl border-black py-1.5 px-3 bg-gray-300 hover:bg-gray-200 transition-transform hover:-translate-y-px hover:shadow-sm font-semibold"
+                className="border rounded-xl border-black py-1.5 px-3 bg-gray-300 hover:bg-gray-200 transition-transform hover:-translate-y-px hover:shadow-sm font-semibold"
               >
                 edit
               </button>
               <button
                 onClick={() => handleRemoveTransaction(transaction)}
-                className="border rounded-2xl border-black py-1.5 px-3 bg-red-500 hover:bg-red-400 transition-transform hover:-translate-y-px hover:shadow-sm font-semibold"
+                className="border rounded-xl border-black py-1.5 px-3 bg-red-500 hover:bg-red-400 transition-transform hover:-translate-y-px hover:shadow-sm font-semibold"
               >
                 remove
               </button>
