@@ -3,116 +3,106 @@
 // react stuff
 import { useState } from "react";
 
-// object types
+// types
 import type { Expense } from "@/types";
 
-// custom modules
-import { 
-  useExpenses
-} from "@/hooks/expenses";
+// hooks
+import { useExpenses } from "@/hooks/expenses";
+
+// components
+import AddTransactionModal from "../components/addTransactionModal";
+
 
 
 export default function Home() {
-  // usage hooks
+  // hooks
   const { handleAddExpense, handleRemoveExpense, expenses } = useExpenses();
 
-
-  // form vars
-  const [title, setTitle] = useState<string>("");
-  const [note, setNote] = useState<string>("");
-  const [amount, setAmount] = useState<string>("");
-
-
-  // utils
-  const onSubmit = () => {
-    handleAddExpense(title, note, Number(amount));
-    setAmount("");
-    setTitle("");
-    setNote("");
-  };
+  // control vars
+  const [isAddingTransaction, setIsAddingTransaction] = useState<boolean>(false);
 
 
   return (
-    <main className="min-h-screen my-12">
-      <div className="flex flex-col gap-2 mb-10 mx-12 mt-12 border border-black p-8">
-        <label 
-          htmlFor="expense-title"
-          className="font-semibold"
-        >
-          Title
-        </label>
-        <input
-          id="expense-title"
-          type="text"
-          placeholder="What was the expense?"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="border border-blue p-2"
-        />
-        <label 
-          htmlFor="expense-amount"
-          className="font-semibold"
-        >
-          Amount
-        </label>
-        <input
-          id="expense-amount"
-          type="text"
-          placeholder="Enter the amount here."
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="border border-blue p-2"
-        />
-        <label 
-          htmlFor="expense-notes"
-          className="font-semibold"
-        >
-          Additional Notes
-        </label>
-        <input
-          id="expense-notes"
-          type="text"
-          placeholder="Any additional notes?"
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          className="border border-blue p-2"
-        />
-        <button 
-          onClick={onSubmit}
-          className="border rounded-md border-black max-w-48 mt-4 py-2 bg-gray-50 hover:bg-gray-200 transition-colors"
-        >
-          Add this EXP!!
-        </button>
+    <main className="min-h-screen">
+      <div className="mx-12 my-12">
+        {/* Monthly report section (with graphs) */}
+        {expenses.length > 0 && (
+          <div>
+            <h2 className="text-5xl font-extrabold my-6">
+              This Month's Report
+            </h2>
+            <div className="text-lg my-6 mx-1">
+              there will be reports here
+            </div>
+          </div>
+        )}
+
+        {/* Transactions list (will only show a few) */}
+        {expenses.length > 0 && (
+          <div className="flex flex-col gap-4">
+            <h2 className="text-4xl font-extrabold">
+              Transactions
+            </h2>
+            <div className="flex flex-col gap-2 mx-1">
+              {expenses.map((expense) => (
+                <div 
+                  className="flex flex-col border border-black px-6 py-2" 
+                  key={expense.id}
+                >
+                  <div className="flex flex-col my-2">
+                    <span>title: {expense.title}</span>
+                    <span>note: {expense.note}</span>
+                    <span>amount: {expense.amount}</span>
+                  </div>
+                  <div className="my-2">
+                    <button
+                      onClick={() => handleRemoveExpense(expense)}
+                      className="border border-black rounded-md hover:bg-gray-100 px-4 py-2"
+                    >
+                      Remove this one
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Functional buttons */}
+        <div className="my-6 flex flex-col gap-4">
+          <h2 className="text-4xl font-extrabold">
+            Actions
+          </h2>
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={() => setIsAddingTransaction(true)}
+              className="border border-black px-4 py-2 rounded-md hover:bg-gray-100 mr-auto"
+            >
+              Add a new transaction
+            </button>
+          </div>
+        </div>
+
+        {/* Suggestions section */}
+        {expenses.length > 0 && (
+          <div className="my-6 text-center flex flex-col">
+            <h2 className="text-4xl font-extrabold my-4 mr-auto">
+              Suggestions for YOU
+            </h2>
+            <div className="flex flex-col w-full">
+              <span className="mr-auto text-lg">
+                There will be suggestions here
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
-      {expenses.length > 0 && (
-        <div className="flex flex-col gap-2 mx-12">
-          The list of your crimes
-          {expenses.map((expense) => (
-            <div 
-              className="flex flex-col border border-black p-6" 
-              key={expense.id}
-            >
-              <span>title: {expense.title}</span>
-              <span>note: {expense.note}</span>
-              <span>amount: {expense.amount}</span>
-              <button
-                onClick={() => handleRemoveExpense(expense)}
-                className="border border-black rounded-md max-w-48 mt-4 bg-gray-50 hover:bg-gray-200"
-              >
-                Remove this one
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {expenses.length > 0 && (
-        <div className="my-12 text-center">
-          <span className="text-4xl font-bold">
-            Control your spending bro.
-          </span>
-        </div>
+      {isAddingTransaction && (
+        <AddTransactionModal 
+          onClose={() => setIsAddingTransaction(false)}
+          handleAddExpense={handleAddExpense}
+        />
       )}
     </main>
   );

@@ -8,7 +8,7 @@ export function addExpense(expense: Expense): void {
   }
 
   const expenses: Expense[] = getExpenses();
-  expenses.push(expense);
+  setExpenses([...expenses, expense]);
 }
 
 
