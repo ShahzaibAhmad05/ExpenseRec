@@ -1,38 +1,77 @@
 // types
-import type { Expense } from "@/types";
+import type { Transaction } from "@/types";
 
 
 type TransactionsSectionProps = {
-  expenses: Expense[];
-  handleRemoveExpense: (expense: Expense) => void;
+  transactions: Transaction[];
+  handleRemoveTransaction: (transaction: Transaction) => void;
 }
 
 
 export default function TransactionsSection(
-  { expenses, handleRemoveExpense }: TransactionsSectionProps
+  { transactions, handleRemoveTransaction }: TransactionsSectionProps
 ) {
+  const categoryBgColorMap: Record<string, string> = {
+    income: "bg-green-500",
+    transaction: "bg-cyan-500",
+    investment: "bg-pink-500",
+    expense: "bg-amber-500"
+  };
+
+  const categoryTextColorMap: Record<string, string> = {
+    income: "text-green-500",
+    transaction: "text-cyan-500",
+    investment: "text-pink-500",
+    expense: "text-amber-500"
+  };
+
+
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-4xl font-extrabold">
         Transactions
       </h2>
       <div className="flex flex-col gap-2 mx-1">
-        {expenses.map((expense) => (
+        {transactions.map((transaction) => (
           <div 
-            className="flex flex-col border border-black px-6 py-2" 
-            key={expense.id}
+            className="flex flex-row border border-black rounded-2xl px-6 py-2 shadow-[6px_6px_0_black]" 
+            key={transaction.id}
           >
             <div className="flex flex-col my-2">
-              <span>title: {expense.title}</span>
-              <span>note: {expense.note}</span>
-              <span>amount: {expense.amount}</span>
+              <h3 className="text-xl font-bold uppercase">{transaction.title}</h3>
+              <div className="my-2">
+                <span 
+                  className={`${categoryBgColorMap[transaction.category]} px-2 py-0.5 rounded-xl border border-black`}
+                >
+                  {transaction.category}
+                </span>
+              </div>
+              <div className="">
+                <span 
+                  className={`${categoryTextColorMap[transaction.category]} text-4xl font-bold font-mono`}
+                >
+                  {transaction.category === "income" ? "+": "-"}
+                  {transaction.amount.toLocaleString()}
+                </span>
+              </div>
             </div>
-            <div className="my-2">
+            <div className="my-2 mx-18">
+              <span className="text-gray-700">
+                {transaction.description}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2 my-2 ml-auto">
               <button
-                onClick={() => handleRemoveExpense(expense)}
-                className="border border-black rounded-md hover:bg-gray-100 px-4 py-2"
+                onClick={() => handleRemoveTransaction(transaction)}
+                className="border rounded-2xl border-black py-1.5 px-3 bg-gray-300 hover:bg-gray-200 transition-transform hover:-translate-y-px hover:shadow-sm font-semibold"
               >
-                Remove this one
+                edit
+              </button>
+              <button
+                onClick={() => handleRemoveTransaction(transaction)}
+                className="border rounded-2xl border-black py-1.5 px-3 bg-red-500 hover:bg-red-400 transition-transform hover:-translate-y-px hover:shadow-sm font-semibold"
+              >
+                remove
               </button>
             </div>
           </div>

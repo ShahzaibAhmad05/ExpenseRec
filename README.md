@@ -1,6 +1,6 @@
-# Expense Tracker System with Recommendations
+# Transaction Tracker System with Recommendations
 
-**This is NOT another LLM-dependent project.** It is a full system for tracking your expenses, switching between different financial modes and getting smart suggestions based on those modes, your expenses and income.
+**This is NOT another LLM-dependent project.** It is a full system for tracking your transactions, switching between different financial modes and getting smart suggestions based on those modes, your transactions and income.
 
 
 ---
@@ -55,13 +55,13 @@ It's the usual clone the repo and run, the commands will be these:
 - Clone the repository:
 
 ```bash
-git clone https://github.com/ShahzaibAhmad05/ExpenseRec.git
+git clone https://github.com/ShahzaibAhmad05/TransactionRec.git
 ```
 
 - Move into the cloned directory:
 
 ```bash
-cd ExpenseRec
+cd TransactionRec
 ```
 
 - Install dependencies:

@@ -3,21 +3,22 @@
 // react stuff
 import { useState } from "react";
 
-// types
-import type { Expense } from "@/types";
-
 // hooks
-import { useExpenses } from "@/hooks/expenses";
+import { useTransactions } from "@/hooks/transactions";
 
 // components
 import AddTransactionModal from "@/components/addTransactionModal";
 import MonthlyReportSection from "@/components/monthlyReportSection";
 import TransactionsSection from "@/components/transactionsSection";
+import LoadingModal from "@/components/loadingModal";
 
 
 export default function Home() {
   // hooks
-  const { handleAddExpense, handleRemoveExpense, expenses } = useExpenses();
+  const { 
+    handleAddTransaction, handleRemoveTransaction, 
+    transactions, isLoading 
+  } = useTransactions();
 
   // control vars
   const [isAddingTransaction, setIsAddingTransaction] = useState<boolean>(false);
@@ -27,27 +28,27 @@ export default function Home() {
     <main className="min-h-screen">
       <div className="mx-12 my-12">
         {/* Monthly report section (with graphs) */}
-        {expenses.length > 0 && (
+        {transactions.length > 0 && (
           <MonthlyReportSection />
         )}
 
         {/* Transactions list (will only show a few) */}
-        {expenses.length > 0 && (
+        {transactions.length > 0 && (
           <TransactionsSection 
-            expenses={expenses} 
-            handleRemoveExpense={handleRemoveExpense} 
+            transactions={transactions} 
+            handleRemoveTransaction={handleRemoveTransaction} 
           />
         )}
 
         {/* Functional buttons */}
         <div className="my-6 flex flex-col gap-4">
           <h2 className="text-4xl font-extrabold">
-            Actions
+            {transactions.length > 0 ? "Actions" : "Add a transaction to get started"}
           </h2>
           <div className="flex flex-col gap-2">
             <button
               onClick={() => setIsAddingTransaction(true)}
-              className="border border-black px-4 py-2 rounded-md hover:bg-gray-100 mr-auto"
+              className="border rounded-2xl border-black py-1.5 px-3 mr-auto bg-gray-300 hover:bg-gray-200 font-semibold hover:-translate-y-px hover:shadow-sm transition-transform"
             >
               Add a new transaction
             </button>
@@ -55,7 +56,7 @@ export default function Home() {
         </div>
 
         {/* Suggestions section */}
-        {expenses.length > 0 && (
+        {transactions.length > 0 && (
           <div className="my-6 text-center flex flex-col">
             <h2 className="text-4xl font-extrabold my-4 mr-auto">
               Suggestions for YOU
@@ -72,8 +73,12 @@ export default function Home() {
       {isAddingTransaction && (
         <AddTransactionModal 
           onClose={() => setIsAddingTransaction(false)}
-          handleAddExpense={handleAddExpense}
+          handleAddTransaction={handleAddTransaction}
         />
+      )}
+
+      {isLoading && (
+        <LoadingModal />
       )}
     </main>
   );
