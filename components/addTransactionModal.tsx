@@ -2,31 +2,34 @@
 
 // react stuff
 import { useState } from "react";
+import { X } from "lucide-react";
+
+// types
+import type { Transaction, TransactionInput } from "@/types";
 
 
 type AddTransactionModalProps = {
   onClose: () => void;
-  handleAddTransaction: (
-    category: string, amount: string, 
-    title: string, description: string
-  ) => void;
+  handleSubmitTransaction: (transaction: TransactionInput) => void;
+  transaction?: Transaction;
+  mode?: "add" | "edit";
 }
 
 
 export default function AddTransactionModal(
-  { onClose, handleAddTransaction }: AddTransactionModalProps
+  { onClose, handleSubmitTransaction, transaction, mode = "add" }: AddTransactionModalProps
 ) {
   // control vars
-  const [category, setCategory] = useState<string>("auto-select");
-  const [amount, setAmount] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [category, setCategory] = useState<string>(transaction?.category || "auto-select");
+  const [amount, setAmount] = useState<string>(transaction?.amount.toString() || "");
+  const [title, setTitle] = useState<string>(transaction?.title || "");
+  const [description, setDescription] = useState<string>(transaction?.description || "");
 
 
   // utils
   const onSubmit = () => {
-    handleAddTransaction(category, amount, title, description);
-    setCategory("auto");
+    handleSubmitTransaction({ category, amount, title, description });
+    setCategory("auto-select");
     setAmount("");
     setTitle("");
     setDescription("");
@@ -35,16 +38,16 @@ export default function AddTransactionModal(
 
 
   return (
-    <div className="border border-black fixed inset-0 backdrop-blur-md flex items-center justify-center">
+    <div className="border border-black fixed inset-0 backdrop-blur-md flex items-center justify-center px-3">
       {/* Container */}
-      <div className="flex flex-col min-w-2xl bg-white border border-black rounded-4xl px-8 py-6">
+      <div className="flex flex-col w-full max-w-2xl bg-white border border-black rounded-4xl px-5 sm:px-8 py-6">
         {/* top buttons */}
         <div className="ml-auto">
           <button 
             onClick={onClose}
             className="hover:bg-red-500/85 border border-black rounded-full px-3 py-1 font-extrabold transition-colors"
           >
-            X
+            <X size={18} />
           </button>
         </div>
 
@@ -123,7 +126,7 @@ export default function AddTransactionModal(
         </div>
 
         {/* buttons area */}
-        <div className="flex flex-row gap-3 ml-auto mt-3">
+        <div className="flex flex-row gap-3 ml-auto mt-3 flex-wrap justify-end">
           <button 
             onClick={onClose}
             className="border rounded-2xl border-black py-1.5 px-6 bg-red-500 hover:bg-red-200 transition-colors font-semibold"
@@ -134,7 +137,7 @@ export default function AddTransactionModal(
             onClick={onSubmit}
             className="border rounded-2xl border-black py-1.5 px-6 bg-blue-500 hover:bg-blue-200 transition-colors font-semibold"
           >
-            + Add
+            {mode === "edit" ? "Save" : "+ Add"}
           </button>
         </div>
       </div>
