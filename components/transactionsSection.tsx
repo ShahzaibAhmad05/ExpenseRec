@@ -41,7 +41,7 @@ export default function TransactionsSection(
               <h3 className="text-xl font-bold uppercase">{transaction.title}</h3>
               <div className="my-2">
                 <span 
-                  className={`${categoryBgColorMap[transaction.category]} px-2 py-0.5 rounded-xl border border-black`}
+                  className={`${categoryBgColorMap[transaction.category]} px-2 py-0.5 rounded-xl border-2 border-black/40 text-sm font-semibold text-black/80`}
                 >
                   {transaction.category}
                 </span>
@@ -63,13 +63,13 @@ export default function TransactionsSection(
             <div className="flex flex-col gap-2 my-2 ml-auto">
               <button
                 onClick={() => handleRemoveTransaction(transaction)}
-                className="border rounded-xl border-black py-1.5 px-3 bg-gray-300 hover:bg-gray-200 transition-transform hover:-translate-y-px hover:shadow-sm font-semibold"
+                className="border rounded-xl border-black py-1.5 px-3 bg-gray-300 hover:bg-gray-200 transition-transform hover:-translate-y-px hover:shadow-[0_1px_0_black] font-semibold"
               >
                 edit
               </button>
               <button
                 onClick={() => handleRemoveTransaction(transaction)}
-                className="border rounded-xl border-black py-1.5 px-3 bg-red-500 hover:bg-red-400 transition-transform hover:-translate-y-px hover:shadow-sm font-semibold"
+                className="border rounded-xl border-black py-1.5 px-3 bg-red-300 hover:bg-red-200 transition-transform hover:-translate-y-px hover:shadow-[0_1px_0_black] font-semibold"
               >
                 remove
               </button>

@@ -29,7 +29,7 @@ export default function Home() {
       <div className="mx-12 my-12 flex flex-col gap-10">
         {/* Monthly report section (with graphs) */}
         {transactions.length > 0 && (
-          <MonthlyReportSection />
+          <MonthlyReportSection transactions={transactions} />
         )}
 
         {/* Transactions list (will only show a few) */}
@@ -48,9 +48,9 @@ export default function Home() {
           <div className="flex flex-col gap-2">
             <button
               onClick={() => setIsAddingTransaction(true)}
-              className="border rounded-2xl border-black py-1.5 px-3 mr-auto bg-gray-300 hover:bg-gray-200 font-semibold hover:-translate-y-px hover:shadow-sm transition-transform"
+              className="border rounded-xl border-black py-1.5 px-3 mr-auto bg-gray-300 hover:bg-gray-200 font-semibold hover:-translate-y-px hover:shadow-[0_1px_0_black] transition-transform"
             >
-              Add a new transaction
+              + Add a new transaction
             </button>
           </div>
         </div>
